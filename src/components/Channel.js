@@ -2,9 +2,24 @@ import React, { useState, useEffect} from 'react';
 import firebase from 'firebase/app';
 import Message from './Message';
 
+
 const Channel = ({user = null, serverId = null, db = null})=>{
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState('');
+
+    async function getJokes(){
+        const url = "https://icanhazdadjoke.com/";
+        const jokeData = await fetch(url,
+            {headers:{
+                'Accept':'application/json'
+            }});
+        // console.log(jokeData);
+        const jokeObj = await jokeData.json();
+        console.log(jokeObj.joke);
+    }
+    
+    
+    
 
     useEffect(()=>{
         if(db){
@@ -40,10 +55,7 @@ const Channel = ({user = null, serverId = null, db = null})=>{
             })
         }
     }
-
-    console.log(...messages);
-    // const arr = messages.map(messages=>({...messages}));
-    // console.log(arr);
+    getJokes();
     return (
         <>
         <ul>
@@ -54,6 +66,7 @@ const Channel = ({user = null, serverId = null, db = null})=>{
         <form onSubmit = {handleOnSubmit}>
             <input type="text" value={newMessage} onChange={handleOnChange} placeholder="Your message goes here..."/>
             <button type="submit" disabled={!newMessage}>Send</button>
+            <button onClick={getJokes()}>Get a joke!</button>
         </form>
         </>
     );
