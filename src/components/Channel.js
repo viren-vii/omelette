@@ -65,16 +65,21 @@ const Channel = ({user = null, serverId = null, db = null})=>{
     }
     return (
         <>
-        <ul>
-        {messages.map(messages =>(
-            <li key={messages.id}><Message {...messages}/></li>
-        ))}
-        </ul>
-        <form onSubmit = {handleOnSubmit}>
-            <input type="text" value={newMessage} onChange={handleOnChange} placeholder="Your message goes here..."/>
-            <button type="submit" disabled={!newMessage}>Send</button>
-        </form>
-        <button onClick={getJokes}>Get a Joke!</button>
+        <div className="h-screen text-center">
+            <h1 className="w-11/12 sm:w-7/12  m-auto text-9xl font-black mt-0 mb-2 text-gray-50 text-shadow-md bg-gray-200">Omlette</h1>
+            <div className="w-11/12 sm:w-7/12 m-auto border-r-2 border-l-2 ">
+                <ul>
+                {messages.map(messages =>(
+                    <li key={messages.id}><Message {...messages}/></li>
+                ))}
+                </ul>
+                <form onSubmit = {handleOnSubmit}>
+                    <input type="text" value={newMessage} onChange={handleOnChange} placeholder="Your message goes here..."/>
+                    <button type="submit" disabled={!newMessage}>Send</button>
+                </form>
+                <button onClick={getJokes}>Get a Joke!</button>
+            </div>
+        </div>
         </>
     );
 };

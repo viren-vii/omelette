@@ -10,7 +10,7 @@ const Message = ({
     // console.log(text);
     // console.log(displayName);
     
-    return (<div>
+    return (<div className="flex flex-wrap bg-gray-200 rounded-full border-b-4 border-white text-right pr-10">
         
         {createdAt?(<span>{formatRelative(new Date(createdAt.seconds *1000),new Date())}</span>):null}
         <p>{message}</p> 
