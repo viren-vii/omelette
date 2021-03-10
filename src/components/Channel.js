@@ -15,7 +15,15 @@ const Channel = ({user = null, serverId = null, db = null})=>{
             }});
         // console.log(jokeData);
         const jokeObj = await jokeData.json();
-        console.log(jokeObj.joke);
+        // console.log(jokeObj.joke);
+
+        if(db){
+            db.collection('servers').doc(serverId).collection('messages').add({
+                createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+                message : jokeObj.joke,
+                createdBy : user,
+            })
+        }
     }
     
     
@@ -55,7 +63,6 @@ const Channel = ({user = null, serverId = null, db = null})=>{
             })
         }
     }
-    getJokes();
     return (
         <>
         <ul>
@@ -66,8 +73,8 @@ const Channel = ({user = null, serverId = null, db = null})=>{
         <form onSubmit = {handleOnSubmit}>
             <input type="text" value={newMessage} onChange={handleOnChange} placeholder="Your message goes here..."/>
             <button type="submit" disabled={!newMessage}>Send</button>
-            <button onClick={getJokes()}>Get a joke!</button>
         </form>
+        <button onClick={getJokes}>Get a Joke!</button>
         </>
     );
 };
