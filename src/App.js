@@ -39,17 +39,11 @@ var servers = serverRef.get().then(snapshot=>{
         
 function App() {
     return ( 
-    <div >
-        {
-            <Homepage db={db}/>
-            /* {user ? (
-            <>
-            <Channel user={user} db={db}/>
-            </>
-        ):( 
-            <Homepage/>
-        )} */}
-    </div>
+    <>
+        <div>
+            {<Homepage db={db}/>}
+        </div>
+    </>
     );
 }
 

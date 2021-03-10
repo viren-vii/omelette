@@ -44,37 +44,51 @@ class Homepage extends React.Component {
     render() {
       return (
         <>
+        
           {!this.state.done ? (
             <>
-              <form onSubmit = {this.handleOnSubmitUsername}>
-                <input
-                  type="text"
-                  name="username"
-                  value={this.state.username}
-                  onChange={this.handleChange}
-                  placeholder="Your username goes here..."
-                />
-              <button type="submit" disabled={!this.state.username}>Set The Username</button><br></br>
-              </form>
-              <p>{this.state.greeting}</p>
-              <form>
-              {this.state.set &&
-                <input
-                  type="text"
-                  name="serverCode"
-                  onChange={this.handleChangeCode}
-                  disabled={!this.state.set}
-                  placeholder="Enter Server Code"
-                />
-              }
-              <br></br>
-              {this.state.code && 
-                <>
-                  <button value="create" onClick = {this.handleRoom} type="submit" disabled={!this.state.set}>CREATE ROOM</button>
-                  <button value="join" onClick = {this.handleRoom} type="submit" disabled={!this.state.set}>JOIN ROOM</button><br></br>
-                </>
-              }
-              </form>
+              <div className="h-screen text-center">
+              <h1 className="text-9xl font-black mt-0 mb-2 text-gray-50 text-shadow-md">Omlette</h1>
+                <div className="m-auto">
+                  <form onSubmit = {this.handleOnSubmitUsername} className="text-center m-auto w-11/12 sm:w-7/12 bg-white shadow-xl rounded-xl p-10 pt-10 pb-28 border border-gray-100">
+                    <input
+                      type="text"
+                      name="username"
+                      value={this.state.username}
+                      onChange={this.handleChange}
+                      placeholder="Your username goes here..."
+                      className = "focus:shadow-inner p-4 rounded-xl border border-gray-100 placeholder-gray-300 text-gray-900 font-bold"
+                    /><br></br>
+                  <button type="submit" disabled={!this.state.username} className="transition duration-500 ease-in-out text-center  bg-white-500 text-gray-900 font-bold p-5 shadow-xl rounded-xl disabled:opacity-20 disabled:cursor-not-allowed">Set The Username</button><br></br>
+                  </form>
+                </div>
+              <>
+                {this.state.greeting ? 
+                <div className="bg-gray-50 m-auto w-11/12 sm:w-7/12 shadow-2xl rounded-2xl mt-8">
+                  <p className="font-sans subpixel-antialiased font-bold p-20 text-6xl text-gray-400">{this.state.greeting}</p>
+                </div> : <div></div>}
+              </>
+              <div className="text-center">
+                <form className="text-center m-auto w-11/12 sm:w-7/12 bg-white shadow-xl rounded-xl p-10 pt-10 pb-28 border border-gray-100">
+                {this.state.set &&
+                  <input
+                    type="text"
+                    name="serverCode"
+                    onChange={this.handleChangeCode}
+                    disabled={!this.state.set}
+                    placeholder="Enter Server Code"
+                  />
+                }
+                <br></br>
+                {this.state.code && 
+                  <>
+                    <button value="create" onClick = {this.handleRoom} type="submit" disabled={!this.state.set}>CREATE ROOM</button>
+                    <button value="join" onClick = {this.handleRoom} type="submit" disabled={!this.state.set}>JOIN ROOM</button><br></br>
+                  </>
+                }
+                </form>
+              </div>
+              </div>
             </>
           ):(
             <Channel user={this.username} serverId={this.serverId} db={this.props.db}/>
