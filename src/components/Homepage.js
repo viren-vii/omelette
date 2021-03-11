@@ -37,7 +37,7 @@ class Homepage extends React.Component {
       serverRef.doc(this.serverId).collection('messages').add({
         createdAt: firebase.firestore.FieldValue.serverTimestamp(),
         message:"Welcome "+this.username+"!",
-        createdBy: this.username,
+        createdBy: 'Admin~',
       });
       this.setState({ done: true });
     }

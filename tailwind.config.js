@@ -3,6 +3,10 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
+      backgroundImage: theme => ({
+
+        // 'joke-cover': "url('./img/smile.png')",
+       })
     },
   },
   variants: {
