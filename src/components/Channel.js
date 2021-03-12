@@ -2,7 +2,6 @@ import React, { useState, useEffect, useRef} from 'react';
 import firebase from 'firebase/app';
 import Message from './Message';
 
-
 const Channel = ({user = null, serverId = null, db = null})=>{
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState('');
@@ -28,11 +27,11 @@ const Channel = ({user = null, serverId = null, db = null})=>{
     }
     
     
-    const messagesEndRef = useRef(null)
+    const messagesEndRef = useRef(null);
 
     const scrollToBottom = () => {
       messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
-    }
+    };
 
     useEffect(() => {
       scrollToBottom()
@@ -45,9 +44,9 @@ const Channel = ({user = null, serverId = null, db = null})=>{
     // }
       
     
-      useEffect(()=> {
-        window.addEventListener('scroll', this.listenScrollEvent)
-      });
+    //   useEffect(()=> {
+    //     window.addEventListener('scroll', this.listenScrollEvent)
+    //   });
 
     useEffect(()=>{
         if(db){
@@ -69,12 +68,19 @@ const Channel = ({user = null, serverId = null, db = null})=>{
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     },[db]);
-
     const handleOnChange = e =>{
+        console.log("onchange "+e.target.value);
         setNewMessage(e.target.value);
     };
-    const handleOnSubmit = e =>{
-        e.preventDefault();
+
+    const click = () =>{
+        console.log(click);
+        alert("alert");
+    }
+
+    const handleOnSubmit = () =>{
+        // e.preventDefault();
+        console.log(newMessage);
 
         if(db){
             db.collection('servers').doc(serverId).collection('messages').add({
@@ -83,10 +89,17 @@ const Channel = ({user = null, serverId = null, db = null})=>{
                 createdBy : user,
             })
         }
-    }
+    };
+    const msgHubStyle = {
+        "bottom":"0px",
+        "position":"fixed",
+        "left":"50%",
+        "transform":"translateX(-50%)",
+
+    };
     return (
         <>
-        <div className="text-center h-full bg-black">
+        {/* <div className="text-center h-full bg-black">
             
             <div className="w-11/12 md:w-6/12 lg:w-4/12 m-auto bg-white ">
                 <ul>
@@ -96,8 +109,12 @@ const Channel = ({user = null, serverId = null, db = null})=>{
                 </ul>
                 <div ref={messagesEndRef} />
             </div>
-                <div className=" bg-white text-center p-2 w-11/12 md:w-6/12 lg:w-4/12 m-auto bg-white ">
-                    <div className="w-full border-2 rounded-full mb-2">
+        </div> */}
+        
+        <div className="text-center bg-black">
+        <div className="" style={msgHubStyle}>
+                <div className="bg-white p-2 w-11/12 md:w-6/12 lg:w-4/12 bg-white ">
+                    <div className="border-2 rounded-full mb-2">
                         <form onSubmit = {handleOnSubmit} className="flex">
                             <input 
                             type="text" 
@@ -111,6 +128,7 @@ const Channel = ({user = null, serverId = null, db = null})=>{
                             </button>
                         </form>
                     </div>
+        
                     <button className="bg-black text-white">Down {color}</button>
                     <div className="flex clear-both border-2 rounded-full p-2 space-x-4">
                             <button onClick={getJokes} className="transition duration-300 flex-1 p-2  rounded-full border font-bold hover:bg-gray-900 hover:text-white hover:border-0">
@@ -121,8 +139,10 @@ const Channel = ({user = null, serverId = null, db = null})=>{
                             </button>
                     </div>
                 </div>
-            
         </div>
+        </div>
+            
+        
 
 
        
