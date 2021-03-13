@@ -38,6 +38,7 @@ class Homepage extends React.Component {
         createdAt: firebase.firestore.FieldValue.serverTimestamp(),
         message:"Welcome "+this.username+"!",
         createdBy: 'Admin~',
+        adminMsg: true,
       });
       this.setState({ done: true });
     }

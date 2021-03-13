@@ -5,7 +5,23 @@ import Message from './Message';
 const Channel = ({user = null, serverId = null, db = null})=>{
     const [messages, setMessages] = useState([]);
     const [newMessage, setNewMessage] = useState('');
-    const [color, setColor] = useState('');
+    const [displayDownButton, setDownButton] = useState(false);
+
+
+    
+    const handleScroll = () =>{
+        // console.log(window.pageYOffset);
+        // console.log(window.scrollY);
+        // console.log(document.body.offsetHeight);
+        const bottom = Math.ceil(window.innerHeight + window.scrollY) >= document.documentElement.scrollHeight
+        if(bottom){
+            setDownButton(false);
+        }else{
+            setDownButton(true);
+        }
+        
+    }
+    window.addEventListener('scroll', handleScroll);
 
     async function getJokes(){
         const url = "https://icanhazdadjoke.com/";
@@ -22,11 +38,30 @@ const Channel = ({user = null, serverId = null, db = null})=>{
                 createdAt: firebase.firestore.FieldValue.serverTimestamp(),
                 message : jokeObj.joke,
                 createdBy : "Admin~joke requested by: "+user,
+                adminMsg : true,
             })
         }
     }
-    
-    
+    async function getFacts(){
+        const url = "https://evilinsult.com/generate_insult.php?lang=en&type=json";
+        const factData = await fetch(url,
+            {headers:{
+                'Content-Type':'application/json'
+            }});
+        // console.log(jokeData);
+        const factObj = await factData.json();
+        console.log(factObj.insult);
+
+        // if(db){
+        //     db.collection('servers').doc(serverId).collection('messages').add({
+        //         createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+        //         message : factObj.fact,
+        //         createdBy : "Admin~fact requested by: "+user,
+        //         adminMsg : true,
+        //     })
+        // }
+    }
+
     const messagesEndRef = useRef(null);
 
     const scrollToBottom = () => {
@@ -36,6 +71,9 @@ const Channel = ({user = null, serverId = null, db = null})=>{
     useEffect(() => {
       scrollToBottom()
     }, [messages]);
+
+    
+
 
     // if (window.scrollY > 400) {
     //     setColor('black');
@@ -69,17 +107,13 @@ const Channel = ({user = null, serverId = null, db = null})=>{
         // eslint-disable-next-line react-hooks/exhaustive-deps
     },[db]);
     const handleOnChange = e =>{
-        console.log("onchange "+e.target.value);
         setNewMessage(e.target.value);
+
     };
 
-    const click = () =>{
-        console.log(click);
-        alert("alert");
-    }
-
-    const handleOnSubmit = () =>{
-        // e.preventDefault();
+    const handleOnSubmit = e =>{
+        e.preventDefault();
+        setNewMessage("");
         console.log(newMessage);
 
         if(db){
@@ -87,6 +121,7 @@ const Channel = ({user = null, serverId = null, db = null})=>{
                 createdAt: firebase.firestore.FieldValue.serverTimestamp(),
                 message : newMessage,
                 createdBy : user,
+                adminMsg : false,
             })
         }
     };
@@ -97,25 +132,36 @@ const Channel = ({user = null, serverId = null, db = null})=>{
         "transform":"translateX(-50%)",
 
     };
+    const bounceBtnStyle = {
+        "bottom":"10em",
+        "position":"fixed",
+        "left":"49%",
+        "transform":"translateX(-50%)",
+    };
+    
     return (
         <>
-        {/* <div className="text-center h-full bg-black">
-            
-            <div className="w-11/12 md:w-6/12 lg:w-4/12 m-auto bg-white ">
-                <ul>
+        <div className="h-full text-center h-full mb-36">
+            <div className="w-11/12 md:w-6/12 lg:w-4/12 m-auto bg-white">
+                <ul className="">
                 {messages.map(messages =>(
                     <li key={messages.id}><Message {...messages}/></li>
                 ))}
                 </ul>
                 <div ref={messagesEndRef} />
             </div>
-        </div> */}
+        </div>
         
-        <div className="text-center bg-black">
-        <div className="" style={msgHubStyle}>
-                <div className="bg-white p-2 w-11/12 md:w-6/12 lg:w-4/12 bg-white ">
-                    <div className="border-2 rounded-full mb-2">
-                        <form onSubmit = {handleOnSubmit} className="flex">
+        
+        {/* mt-36 */}
+        {displayDownButton?<button className="animate-bounce focus:outline-none" style={bounceBtnStyle} onClick={scrollToBottom}>
+            <img src='img/down.png' className="h-9 float-left" alt='go down'/>
+        </button>: null}
+        <div className="w-screen text-center" >
+                <div className="text-center bg-white p-2 w-11/12 md:w-6/12 lg:w-4/12 " style={msgHubStyle}>
+                    <div className="bg-white">
+                    <div className="border-2 rounded-full mb-2" >
+                        <form onSubmit = {handleOnSubmit} className="flex" >
                             <input 
                             type="text" 
                             value={newMessage} 
@@ -129,18 +175,20 @@ const Channel = ({user = null, serverId = null, db = null})=>{
                         </form>
                     </div>
         
-                    <button className="bg-black text-white">Down {color}</button>
+                    
                     <div className="flex clear-both border-2 rounded-full p-2 space-x-4">
-                            <button onClick={getJokes} className="transition duration-300 flex-1 p-2  rounded-full border font-bold hover:bg-gray-900 hover:text-white hover:border-0">
+                            <button onClick={getJokes} className="transition duration-300 flex-1 p-2 focus:outline-none rounded-full border font-bold hover:bg-gray-900 hover:text-white hover:border-0">
                                 <img src='img/smile.svg' className="h-6 float-left" alt='getJoke!'/> Get a joke 
                             </button>
-                            <button onClick={getJokes} className="transition duration-300 flex-1 p-2  rounded-full border font-bold hover:bg-gray-900 hover:text-white hover:border-0">
-                                <img src='img/smile.svg' className="h-6 float-left" alt='getJoke!'/> Get a joke 
+                            <button onClick={getFacts} className="transition duration-300 flex-1 p-2 focus:outline-none rounded-full border font-bold hover:bg-gray-900 hover:text-white hover:border-0">
+                                <img src='img/smile.svg' className="h-6 float-left" alt='getJoke!'/> Get a insult 
                             </button>
                     </div>
                 </div>
+                </div>
         </div>
-        </div>
+        
+    
             
         
 
