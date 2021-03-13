@@ -36,7 +36,7 @@ const Message = ({
     <>
     <div style={adminMsg?arrowLeft:arrowRight} className="mt-2"></div>
     <div className="block p-1 font-sans subpixel-antialiased font-light select-none">
-        <div className={"rounded-2xl bg-gray-200 p-2 pr-5 "+(adminMsg?"border-b-4 border-gray-400":"border-b-4 border-gray-300")}>
+        <div className={"rounded-2xl bg-gray-200 p-2 pr-5 pl-5 "+(adminMsg?"border-b-4 border-gray-400":"border-b-4 border-gray-300")}>
         <span className={"inline uppercase text-xs font-bold text-gray-500 text-opacity-20 hover:text-opacity-100 "+(adminMsg?"text-right":"text-left")}>
                     {createdAt?(<p>{formatRelative(new Date(createdAt.seconds *1000),new Date())}</p>):null}
                 </span>
