@@ -195,9 +195,9 @@ const Channel = ({user = null, serverId = null, db = null})=>{
                             value={newMessage} 
                             onChange={handleOnChange} 
                             placeholder="Your message goes here..." 
-                            className="flex-grow rounded-full p-2 pt-1 pb-1 focus:shadow-inner font-bold mr-1 placeholder-gray-300 text-gray-900"
+                            className="flex-grow rounded-full p-2 pt-1 pb-1 focus:shadow-inner focus:outline-none font-bold mr-1 placeholder-gray-300 text-gray-900"
                             />
-                            <button onClick={toggle} className="transform focus:outline-none transition duration-300 hover:scale-150 flex-initial">
+                            <button type="button" onClick={toggle} className="transform focus:outline-none transition duration-300 hover:scale-150 flex-initial">
                                 <img src='img/smiling.png' alt='emojis' className='h-6'/>
                             </button>
                             <button type="submit" disabled={!newMessage} className="transform focus:outline-none transition duration-300 hover:bg-gray-200 hover:-rotate-90 flex-initial rounded-full border-2 bg-white p-4 font-black disabled:opacity-20 disabled:cursor-not-allowed">
@@ -210,9 +210,9 @@ const Channel = ({user = null, serverId = null, db = null})=>{
                             <button onClick={getJokes} className="transition duration-300 flex-1 p-2 focus:outline-none rounded-full border font-bold hover:bg-gray-900 hover:text-white hover:border-0">
                                 <img src='img/smile.svg' className="h-6 float-left" alt='getJoke!'/> Get a joke 
                             </button>
-                            <button onClick={getFacts} className="transition duration-300 flex-1 p-2 focus:outline-none rounded-full border font-bold hover:bg-gray-900 hover:text-white hover:border-0">
+                            {/* <button onClick={getFacts} className="transition duration-300 flex-1 p-2 focus:outline-none rounded-full border font-bold hover:bg-gray-900 hover:text-white hover:border-0">
                                 <img src='img/smile.svg' className="h-6 float-left" alt='getJoke!'/> Get a insult 
-                            </button>
+                            </button> */}
                     </div>
                 </div>
                 </div>
