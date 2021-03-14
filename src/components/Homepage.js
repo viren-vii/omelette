@@ -64,7 +64,7 @@ class Homepage extends React.Component {
                   </button>
                 </div> */}
 
-                <div className="m-auto">
+                <div className="m-auto mt-10">
                   <form onSubmit = {this.handleOnSubmitUsername} className="text-center m-auto w-11/12 sm:w-7/12 shadow-xl rounded-xl p-10 pt-10 pb-28 border-2 border-gray-100 dark:border-gray-700">
                     <input
                       type="text"
