@@ -53,7 +53,7 @@ const Channel = ({user = null, serverId = null, db = null})=>{
         }
     }
     async function getFacts(){
-        const url = "https://cors-anywhere.herokuapp.com/https://evilinsult.com/generate_insult.php?lang=en&type=json";
+        const url ="https://evilinsult.com/generate_insult.php?lang=en&type=json";
 
         // var xmlHttp = new XMLHttpRequest();
         // xmlHttp.open( "GET", url, true ); // false for synchronous request
@@ -62,6 +62,8 @@ const Channel = ({user = null, serverId = null, db = null})=>{
 
         const factData = await fetch(url,
             {headers:{
+                "Access-Control-Allow-Origin":"*",
+                "Access-Control-Allow-Headers": "X-Requested-With",
                 'Content-Type':'application/json',
             }});
         // factData.header("Access-Control-Allow-Origin", "*");
@@ -111,7 +113,6 @@ const Channel = ({user = null, serverId = null, db = null})=>{
                 .doc(serverId)
                 .collection('messages')
                 .orderBy('createdAt')
-                .limit(100)
                 .onSnapshot(querySnapshot =>{
                     const data = querySnapshot.docs.map(doc=>({
                         ...doc.data(),
@@ -165,8 +166,9 @@ const Channel = ({user = null, serverId = null, db = null})=>{
     
     return (
         <>
-        <div className="h-full text-center h-full mb-36">
-            <div className="w-11/12 md:w-6/12 lg:w-4/12 m-auto bg-white">
+       
+        <div className="h-100% dark:bg-gray-800 text-center h-full mb-36">
+            <div className="bg-white dark:bg-gray-700 w-11/12 md:w-6/12 lg:w-4/12 m-auto">
                 <ul className="">
                 {messages.map(messages =>(
                     <li key={messages.id}><Message {...messages}/></li>
@@ -182,9 +184,10 @@ const Channel = ({user = null, serverId = null, db = null})=>{
             <img src='img/down.png' className="h-9 float-left" alt='go down'/>
         </button>: null}
         {pickerOpen?(<div style={pickerStyle}><Picker onEmojiClick={onEmojiClick}/></div>):null}
-        <div className="w-screen text-center" >
-                <div className="text-center bg-white p-2 w-11/12 md:w-6/12 lg:w-4/12 " style={msgHubStyle}>
-                    <div className="bg-white">
+
+        <div className="w-screen text-center dark:bg-gray-800" >
+                <div className="bg-white dark:bg-gray-800 text-center p-2 w-11/12 md:w-6/12 lg:w-4/12 " style={msgHubStyle}>
+                    <div className="bg-white dark:bg-gray-800">
                     <div className="border-2 rounded-full mb-2" >
                         <form onSubmit = {handleOnSubmit} className="flex" >
                             <input 
@@ -192,7 +195,7 @@ const Channel = ({user = null, serverId = null, db = null})=>{
                             value={newMessage} 
                             onChange={handleOnChange} 
                             placeholder="Your message goes here..." 
-                            className="flex-grow rounded-full p-2 pt-1 pb-1 focus:shadow-inner placeholder-gray-300 text-gray-900 font-bold mr-1"
+                            className="flex-grow rounded-full p-2 pt-1 pb-1 focus:shadow-inner font-bold mr-1 placeholder-gray-300 text-gray-900"
                             />
                             <button onClick={toggle} className="transform focus:outline-none transition duration-300 hover:scale-150 flex-initial">
                                 <img src='img/smiling.png' alt='emojis' className='h-6'/>
@@ -214,11 +217,6 @@ const Channel = ({user = null, serverId = null, db = null})=>{
                 </div>
                 </div>
         </div>
-        
-    
-            
-        
-
 
        
         </>

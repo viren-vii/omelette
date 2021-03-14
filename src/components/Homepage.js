@@ -17,7 +17,11 @@ class Homepage extends React.Component {
     handleChangeCode = event =>{
       this.setState({code : event.target.value});
     }
-    
+    toggleDark = event =>{
+      event.preventDefault();
+      this.setState({dark: !this.state.dark});
+      console.log(this.state.dark);
+    }
     handleOnSubmitUsername = event =>{
       event.preventDefault();
       this.username = this.state.username;
@@ -44,15 +48,24 @@ class Homepage extends React.Component {
     }
    
     render() {
+      //this.state.dark
       return (
         <>
-        
+        {/* <div className={(this.state.dark?"dark":"")}> */}
+        <div className="dark:bg-gray-800">
           {!this.state.done ? (
             <>
-              <div className="h-screen text-center">
-              <h1 className="text-9xl font-black mt-0 mb-2 text-gray-50 text-shadow-md">Omlette</h1>
+            
+              <div className={"h-screen text-center dark:bg-gray-800"}>
+              
+              {/* <div className="block bg-white dark:bg-gray-800 p-5 m-auto text-center">
+                  <button onClick={this.toggleDark} className="transition duration-500 ease-in-out text-center dark:bg-gray-700 text-gray-900 dark:text-gray-100 font-bold p-5 shadow-2xl dark:shadow-inner rounded-full transform hover:scale-125 focus:outline-none">
+                    {true?"LIGHT MODE":"DARK MODE"}
+                  </button>
+                </div> */}
+
                 <div className="m-auto">
-                  <form onSubmit = {this.handleOnSubmitUsername} className="text-center m-auto w-11/12 sm:w-7/12 shadow-xl rounded-xl p-10 pt-10 pb-28 border border-gray-100">
+                  <form onSubmit = {this.handleOnSubmitUsername} className="text-center m-auto w-11/12 sm:w-7/12 shadow-xl rounded-xl p-10 pt-10 pb-28 border-2 border-gray-100 dark:border-gray-700">
                     <input
                       type="text"
                       name="username"
@@ -61,13 +74,13 @@ class Homepage extends React.Component {
                       placeholder="Your username goes here..."
                       className = "focus:shadow-inner p-4 rounded-xl border border-gray-100 placeholder-gray-300 text-gray-900 font-bold"
                     /><br></br>
-                  <button type="submit" disabled={!this.state.username} className="transition duration-500 ease-in-out text-center  bg-white-500 text-gray-900 font-bold p-5 shadow-xl rounded-full hover:opacity-50 disabled:opacity-20 disabled:cursor-not-allowed">Set The Username</button><br></br>
+                  <button type="submit" disabled={!this.state.username} className="transition duration-500 ease-in-out text-center text-gray-900 dark:text-gray-100 font-bold p-5 shadow-xl rounded-full hover:opacity-50 disabled:opacity-20 disabled:cursor-not-allowed focus:outline-none">Set The Username</button><br></br>
                   </form>
                 </div>
               <>
                 {this.state.greeting ? 
-                <div className="bg-gray-50 m-auto w-11/12 sm:w-7/12 shadow-2xl rounded-2xl mt-8">
-                  <p className="font-sans subpixel-antialiased font-bold p-20 text-6xl text-gray-400">{this.state.greeting}</p>
+                <div className="bg-gray-50 dark:bg-gray-900 m-auto w-11/12 sm:w-7/12 shadow-2xl rounded-2xl mt-8">
+                  <p className="font-sans subpixel-antialiased font-extralight p-20 text-6xl text-gray-400 dark:text-red-700">{this.state.greeting}</p>
                 </div> : <div></div>}
               </>
               <div className={this.state.greeting?"visible":"invisible"}>
@@ -83,15 +96,17 @@ class Homepage extends React.Component {
                   />
                 }
                 <br></br>
-                    <button value="create" onClick = {this.handleRoom} type="submit" disabled={!this.state.code} className="transition duration-500 ease-in-out w-44 text-center  bg-white-500 text-gray-900 font-bold p-5 shadow-xl rounded-full disabled:opacity-20 hover:opacity-50 disabled:cursor-not-allowed">CREATE ROOM</button>
-                    <button value="join" onClick = {this.handleRoom} type="submit" disabled={!this.state.code} className="transition duration-500 ease-in-out w-44 text-center  bg-white-500 text-gray-900 font-bold p-5 shadow-xl rounded-full disabled:opacity-20 hover:opacity-50 disabled:cursor-not-allowed">JOIN ROOM</button><br></br>
+                    <button value="Enter the room" onClick = {this.handleRoom} type="submit" disabled={!this.state.code} className="transition duration-500 ease-in-out text-center text-gray-900 dark:text-gray-100 font-bold p-5 shadow-xl rounded-full hover:opacity-50 disabled:opacity-20 disabled:cursor-not-allowed focus:outline-none">ENTER THE ROOM!</button>
                 </form>
               </div>
               </div>
+              
             </>
           ):(
             <Channel user={this.username} serverId={this.serverId} db={this.props.db}/>
           )}
+          </div>
+          {/* </div> */}
         </>
       );
     }
