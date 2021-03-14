@@ -72,7 +72,7 @@ class Homepage extends React.Component {
                       value={this.state.username}
                       onChange={this.handleChange}
                       placeholder="Your username goes here..."
-                      className = "focus:shadow-inner p-4 rounded-xl border border-gray-100 placeholder-gray-300 text-gray-900 font-bold"
+                      className = "focus:shadow-inner focus:outline-none p-4 rounded-xl border border-gray-100 placeholder-gray-300 text-gray-900 font-bold"
                     /><br></br>
                   <button type="submit" disabled={!this.state.username} className="transition duration-500 ease-in-out text-center text-gray-900 dark:text-gray-100 font-bold p-5 shadow-xl rounded-full hover:opacity-50 disabled:opacity-20 disabled:cursor-not-allowed focus:outline-none">Set The Username</button><br></br>
                   </form>
@@ -92,7 +92,7 @@ class Homepage extends React.Component {
                     onChange={this.handleChangeCode}
                     disabled={!this.state.greeting}
                     placeholder="Enter Server Code"
-                    className = "focus:shadow-inner p-4 rounded-xl border border-gray-100 placeholder-gray-300 text-gray-900 font-bold"
+                    className = "focus:shadow-inner focus:outline-none p-4 rounded-xl border border-gray-100 placeholder-gray-300 text-gray-900 font-bold"
                   />
                 }
                 <br></br>
