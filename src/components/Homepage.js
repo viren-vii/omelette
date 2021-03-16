@@ -80,7 +80,7 @@ class Homepage extends React.Component {
               <>
                 {this.state.greeting ? 
                 <div className="bg-gray-50 dark:bg-gray-900 m-auto w-11/12 sm:w-7/12 shadow-2xl rounded-2xl mt-8">
-                  <p className="font-sans subpixel-antialiased font-extralight p-20 text-6xl text-gray-400 dark:text-red-700">{this.state.greeting}</p>
+                  <p className="font-sans subpixel-antialiased font-extralight p-20 lg:text-6xl md:text-2xl text-gray-400 dark:text-red-700 truncate">{this.state.greeting}</p>
                 </div> : <div></div>}
               </>
               <div className={this.state.greeting?"visible":"invisible"}>

@@ -9,13 +9,13 @@ import 'firebase/auth';
 import 'firebase/firestore';
 
 firebase.initializeApp({
-        apiKey: "AIzaSyAjiUxbUy0c7bbThDc3FVQZV4hdHgQyn7E",
-        authDomain: "react-app-cc170.firebaseapp.com",
-        projectId: "react-app-cc170",
-        storageBucket: "react-app-cc170.appspot.com",
-        messagingSenderId: "836201567269",
-        appId: "1:836201567269:web:110009730f794a0a415bcc",
-        measurementId: "G-YQ4LMNF37Y"
+        apiKey: process.env.REACT_APP_FIREBASE_API_KEY,
+        authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+        projectId: process.env.REACT_APP_PROJECT_ID,
+        storageBucket: process.env.REACT_APP_STORAGE_BUCKET ,
+        messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
+        appId: process.env.REACT_APP_APP_ID,
+        measurementId: process.env.REACT_APP_MEASUREMENT_ID,
 });
 
 const db = firebase.firestore();
@@ -31,7 +31,7 @@ var servers = serverRef.get().then(snapshot=>{
                 // console.log(now);
                 // console.log(date);
                 // console.log(Math.round((now-date)/(60*60*24*1000)));
-                if(days>5){
+                if(days>2){
                     doc.ref.delete();
                 }
         })
